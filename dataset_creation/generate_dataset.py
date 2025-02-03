@@ -18,6 +18,15 @@ def generate_data(num_samples):
         # Unique client ID
         customer_id = f"{i + 1:05d}"
 
+        #name
+        first_name = fake.first_name()
+        last_name = fake.last_name()
+        name = f"{first_name} {last_name}"
+
+        # Email
+        email_domain = fake.free_email_domain()
+        email = f"{first_name.lower()}.{last_name[:2].lower()}@{email_domain}"
+
         # Age (normal distribution)
         age = int(np.clip(np.random.normal(35, 10), 18, 70))
 
@@ -49,12 +58,12 @@ def generate_data(num_samples):
         is_fraud = 1 if random.uniform(0, 1) < 0.02 else 0  # 2% of fraud simulated
 
         # Add data to the list
-        data.append([customer_id, age, gender, income, purchase_freq, amount_spent,
+        data.append([customer_id, name, email, age, gender, income, purchase_freq, amount_spent,
                      product_category, time_spent, payment_method, discount_used, is_fraud])
 
     # Convert to a DataFrame
     df = pd.DataFrame(data, columns=[
-        "Client_ID", "Age", "Gender", "Annual_Income", "Purchase_Frequency",
+        "Client_ID", "Username", "Email", "Age", "Gender", "Annual_Income", "Purchase_Frequency",
         "Amount_Spent", "Product_Category", "Time_Spent", "Payment_Method",
         "Discount_Used", "Fraud"
     ])
